@@ -38,7 +38,7 @@ public class FirstFragment extends Fragment implements MyItemClickListener{
         recyclerView.setLayoutManager(linearLayoutManager);
         FruitAdapter fruitAdapter = new FruitAdapter(fruits);
         recyclerView.setAdapter(fruitAdapter);
-        fruitAdapter.setOnItemClickListener(this);
+        fruitAdapter.setOnItemClickListener(this); 
         return view;
     }
 
