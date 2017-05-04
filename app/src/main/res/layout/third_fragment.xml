@@ -1,0 +1,12 @@
+<LinearLayout xmlns:anndroid="http://schemas.android.com/apk/res/android"
+    anndroid:layout_width="match_parent"
+    anndroid:layout_height="match_parent"
+    anndroid:orientation="vertical"
+    anndroid:background="#ffff00">
+    <TextView
+        anndroid:layout_width="wrap_content"
+        anndroid:layout_height="wrap_content"
+        anndroid:layout_gravity="center_horizontal"
+        anndroid:textSize="20sp"
+        anndroid:text="This is right fragment2"/>
+</LinearLayout>

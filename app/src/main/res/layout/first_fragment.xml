@@ -1,0 +1,11 @@
+<LinearLayout xmlns:anndroid="http://schemas.android.com/apk/res/android"
+    anndroid:layout_width="match_parent"
+    anndroid:layout_height="match_parent"
+    anndroid:orientation="vertical">
+    <android.support.v7.widget.RecyclerView
+        anndroid:id="@+id/recycler_view"
+        anndroid:layout_width="match_parent"
+        anndroid:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+</LinearLayout>
