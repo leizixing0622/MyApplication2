@@ -4,7 +4,8 @@
     anndroid:orientation="vertical"
     anndroid:background="#FFFFFF">
     <TextView
-        anndroid:layout_width="wrap_content"
+        anndroid:id="@+id/sugar_list"
+        anndroid:layout_width="match_parent"
         anndroid:layout_height="wrap_content"
         anndroid:layout_gravity="center_horizontal"
         anndroid:textSize="20sp"/>

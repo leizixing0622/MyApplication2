@@ -1,6 +1,9 @@
 package com.example.john.myapplication.activity;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -11,7 +14,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.john.myapplication.db.MyDatabaseHelper;
 import com.example.john.myapplication.fragment.DetailFirstFragment;
 import com.example.john.myapplication.fragment.DetailSecondFragment;
 import com.example.john.myapplication.fragment.DetailThirdFragment;
@@ -24,11 +30,12 @@ import java.util.List;
  * Created by John on 2017/5/3.
  */
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     private PagerAdapter pagerAdapter;
     private CustomViewpager viewPager;
     private TabLayout tabLayout;
+    private SQLiteOpenHelper sqLiteOpenHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +56,8 @@ public class DetailActivity extends AppCompatActivity {
         initData();
         initView();
         initTabLayout();
+        TextView textView = (TextView) findViewById(R.id.add_to_candy_list);
+        textView.setOnClickListener(this);
     }
     private void initData(){
         final List<Fragment> fragments = new ArrayList<Fragment>();
@@ -109,5 +118,25 @@ public class DetailActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.add_to_candy_list:
+                sqLiteOpenHelper = new MyDatabaseHelper(this, "SugarStore.db", null, 1);
+                SQLiteDatabase sqLiteDatabase = sqLiteOpenHelper.getWritableDatabase();
+                ContentValues contentValues = new ContentValues();
+                contentValues.put("name", "枣生贵子");
+                contentValues.put("price", 14.79);
+                contentValues.put("amount", 1);
+                sqLiteDatabase.insert("sugars", null, contentValues);
+                contentValues.clear();
+                Toast.makeText(DetailActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+
+                break;
+        }
     }
 }

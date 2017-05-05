@@ -13,16 +13,11 @@ import android.widget.Toast;
 public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     private Context mContext;
-    private static final String CREATE_BOOK = "create table books(" +
+    private static final String CREATE_BOOK = "create table sugars(" +
             "id integer primary key autoincrement, " +
-            "author text, " +
+            "name text, " +
             "price real, " +
-            "pages integer, " +
-            "name text)";
-    private static final String CREATE_CATEGORY = "create table categories(" +
-            "id integer primary key autoincrement, " +
-            "category_name text, " +
-            "category_code integer)";
+            "amount integer)";
 
     public MyDatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -32,15 +27,11 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_BOOK);
-        db.execSQL(CREATE_CATEGORY);
-        Toast.makeText(mContext, "create table success", Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, "数据库初始化成功", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("drop table if exists books");
-        db.execSQL("drop table if exists categories");
-        onCreate(db);
-        Log.d("MyDatabaseHelper", "onUpgrade");
+
     }
 }
