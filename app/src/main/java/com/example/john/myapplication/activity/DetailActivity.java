@@ -2,6 +2,7 @@ package com.example.john.myapplication.activity;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +23,7 @@ import com.example.john.myapplication.db.MyDatabaseHelper;
 import com.example.john.myapplication.fragment.DetailFirstFragment;
 import com.example.john.myapplication.fragment.DetailSecondFragment;
 import com.example.john.myapplication.fragment.DetailThirdFragment;
+import com.example.john.myapplication.model.Fruit;
 import com.example.john.myapplication.viewpager.CustomViewpager;
 
 import java.util.ArrayList;
@@ -36,15 +39,18 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     private CustomViewpager viewPager;
     private TabLayout tabLayout;
     private SQLiteOpenHelper sqLiteOpenHelper;
+    private Fruit fruit;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_activity);
+        //接受首页传递过来的单件商品信息
         Intent intent = getIntent();
         String s1 = intent.getStringExtra("title");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(s1);
+        fruit = (Fruit) intent.getSerializableExtra("fruit");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -126,13 +132,26 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.add_to_candy_list:
                 sqLiteOpenHelper = new MyDatabaseHelper(this, "SugarStore.db", null, 1);
                 SQLiteDatabase sqLiteDatabase = sqLiteOpenHelper.getWritableDatabase();
-                ContentValues contentValues = new ContentValues();
-                contentValues.put("name", "枣生贵子");
-                contentValues.put("price", 14.79);
-                contentValues.put("amount", 1);
-                sqLiteDatabase.insert("sugars", null, contentValues);
-                contentValues.clear();
-                Toast.makeText(DetailActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
+                Cursor cursor = sqLiteDatabase.rawQuery("select * from fruits where fruit_id = ?", new String[]{String.valueOf(fruit.getFruitId())});
+                if(cursor.getCount() != 0){
+                    Log.d("add", ">>>已经有这种商品了");
+                    cursor.moveToFirst();
+                    int amount = cursor.getInt(cursor.getColumnIndex("amount"));
+                    sqLiteDatabase.execSQL("update fruits set amount = ? where fruit_id = ?", new String[]{String.valueOf(amount + 1), String.valueOf(fruit.getFruitId())});
+                    Toast.makeText(DetailActivity.this, "已经成功添加到您的喜糖盒子", Toast.LENGTH_SHORT).show();
+                }else{
+                    Log.d("add", ">>>还没有这种商品");
+                    ContentValues contentValues = new ContentValues();
+                    contentValues.put("fruit_id", fruit.getFruitId());
+                    contentValues.put("name", fruit.getName());
+                    contentValues.put("price", fruit.getPrice());
+                    contentValues.put("title", fruit.getTitle());
+                    contentValues.put("amount", 1);
+                    contentValues.put("img_id", fruit.getImageId());
+                    sqLiteDatabase.insert("fruits", null, contentValues);
+                    contentValues.clear();
+                    Toast.makeText(DetailActivity.this, "已经成功添加到您的喜糖盒子", Toast.LENGTH_SHORT).show();
+                }
                 break;
             default:
 

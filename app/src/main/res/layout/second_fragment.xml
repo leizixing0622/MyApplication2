@@ -1,12 +1,86 @@
-<LinearLayout xmlns:anndroid="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:anndroid="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     anndroid:layout_width="match_parent"
     anndroid:layout_height="match_parent"
     anndroid:orientation="vertical"
     anndroid:background="#FFFFFF">
-    <TextView
-        anndroid:id="@+id/sugar_list"
+
+    <RelativeLayout
         anndroid:layout_width="match_parent"
-        anndroid:layout_height="wrap_content"
-        anndroid:layout_gravity="center_horizontal"
-        anndroid:textSize="20sp"/>
+        anndroid:layout_height="50dp"
+        anndroid:background="@color/red">
+        <TextView
+            anndroid:layout_width="wrap_content"
+            anndroid:layout_height="match_parent"
+            anndroid:text="我的喜糖盒子"
+            anndroid:textSize="20sp"
+            anndroid:textColor="@color/white"
+            anndroid:paddingTop="10dp"
+            anndroid:paddingBottom="10dp"
+            anndroid:paddingLeft="10dp"/>
+        <TextView
+            anndroid:id="@+id/edit"
+            anndroid:layout_width="wrap_content"
+            anndroid:layout_height="match_parent"
+            anndroid:text="编辑"
+            anndroid:textSize="16sp"
+            anndroid:textColor="@color/white"
+            anndroid:layout_alignParentRight="true"
+            anndroid:background="@color/red"
+            anndroid:gravity="center"
+            anndroid:paddingRight="20dp"
+            />
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        anndroid:id="@+id/recycler_view"
+        anndroid:layout_width="match_parent"
+        anndroid:layout_height="0dp"
+        anndroid:layout_weight="1">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <RelativeLayout
+        anndroid:layout_width="match_parent"
+        anndroid:layout_height="50dp"
+        anndroid:background="#646464"
+        anndroid:gravity="center">
+        <CheckBox
+            anndroid:id="@+id/all_check"
+            anndroid:layout_width="wrap_content"
+            anndroid:layout_height="match_parent"
+            anndroid:layout_alignParentStart="true"
+            anndroid:text=" 全选"
+            style="@style/MyCheckBox"
+            anndroid:layout_marginLeft="15dp"
+            anndroid:textColor="@color/white"/>
+
+        <TextView
+            anndroid:id="@+id/total_money"
+            anndroid:layout_width="wrap_content"
+            anndroid:layout_height="match_parent"
+            anndroid:text="合计:"
+            anndroid:textSize="20sp"
+            anndroid:gravity="center"
+            anndroid:layout_marginLeft="15dp"
+            anndroid:layout_toRightOf="@id/all_check"
+            anndroid:textColor="@color/white"/>
+        <TextView
+            anndroid:layout_width="wrap_content"
+            anndroid:layout_height="match_parent"
+            anndroid:text="¥4.50(每份)"
+            anndroid:textSize="20sp"
+            anndroid:layout_toRightOf="@id/total_money"
+            anndroid:gravity="center"
+            anndroid:textColor="@color/white"/>
+
+        <Button
+            anndroid:layout_width="wrap_content"
+            anndroid:layout_height="match_parent"
+            anndroid:background="@color/red"
+            anndroid:layout_alignParentRight="true"
+            anndroid:text="去结算"
+            anndroid:textColor="@color/white"/>
+    </RelativeLayout>
 </LinearLayout>

@@ -2,7 +2,7 @@
     anndroid:layout_width="match_parent"
     anndroid:layout_height="match_parent"
     anndroid:orientation="vertical"
-    anndroid:background="#ffff00">
+    anndroid:background="#ffffff">
     <TextView
         anndroid:layout_width="wrap_content"
         anndroid:layout_height="wrap_content"
