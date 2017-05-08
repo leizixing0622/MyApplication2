@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:anndroid="http://schemas.android.com/apk/res/android"
+    anndroid:layout_width="match_parent"
+    anndroid:layout_height="50dp"
+    anndroid:background="#646464"
+    anndroid:gravity="center">
+    <CheckBox
+        anndroid:id="@+id/all_check"
+        anndroid:layout_width="wrap_content"
+        anndroid:layout_height="match_parent"
+        anndroid:layout_alignParentStart="true"
+        anndroid:text=" 全选"
+        style="@style/MyCheckBox"
+        anndroid:layout_marginLeft="15dp"
+        anndroid:textColor="@color/white"/>
+
+    <Button
+        anndroid:id="@+id/delete"
+        anndroid:layout_width="wrap_content"
+        anndroid:layout_height="match_parent"
+        anndroid:background="@color/red"
+        anndroid:layout_alignParentRight="true"
+        anndroid:text="删除"
+        anndroid:textColor="@color/white"/>
+</RelativeLayout>

@@ -62,4 +62,5 @@ public class FirstFragment extends Fragment implements MyItemClickListener{
         intent.putExtras(bundle);
         startActivity(intent);
     }
+
 }

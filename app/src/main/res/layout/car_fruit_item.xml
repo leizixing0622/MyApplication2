@@ -5,6 +5,7 @@
     android:background="@drawable/border"
     android:padding="5px">
     <CheckBox
+        android:id="@+id/fruit_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"

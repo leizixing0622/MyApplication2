@@ -1,0 +1,44 @@
+<RelativeLayout
+    xmlns:anndroid="http://schemas.android.com/apk/res/android"
+    anndroid:layout_width="match_parent"
+    anndroid:layout_height="50dp"
+    anndroid:background="#646464"
+    anndroid:gravity="center">
+    <CheckBox
+        anndroid:id="@+id/all_check"
+        anndroid:layout_width="wrap_content"
+        anndroid:layout_height="match_parent"
+        anndroid:layout_alignParentStart="true"
+        anndroid:text=" 全选"
+        style="@style/MyCheckBox"
+        anndroid:layout_marginLeft="15dp"
+        anndroid:textColor="@color/white"/>
+
+    <TextView
+        anndroid:id="@+id/total_money"
+        anndroid:layout_width="wrap_content"
+        anndroid:layout_height="match_parent"
+        anndroid:text="合计:"
+        anndroid:textSize="20sp"
+        anndroid:gravity="center"
+        anndroid:layout_marginLeft="15dp"
+        anndroid:layout_toRightOf="@id/all_check"
+        anndroid:textColor="@color/white"/>
+    <TextView
+        anndroid:layout_width="wrap_content"
+        anndroid:layout_height="match_parent"
+        anndroid:text="¥4.50(每份)"
+        anndroid:textSize="20sp"
+        anndroid:layout_toRightOf="@id/total_money"
+        anndroid:gravity="center"
+        anndroid:textColor="@color/white"/>
+
+    <Button
+        anndroid:id="@+id/go_to_pay"
+        anndroid:layout_width="wrap_content"
+        anndroid:layout_height="match_parent"
+        anndroid:background="@color/red"
+        anndroid:layout_alignParentRight="true"
+        anndroid:text="去结算"
+        anndroid:textColor="@color/white"/>
+</RelativeLayout>

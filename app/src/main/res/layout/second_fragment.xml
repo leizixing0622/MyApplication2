@@ -31,6 +31,19 @@
             anndroid:gravity="center"
             anndroid:paddingRight="20dp"
             />
+        <TextView
+            anndroid:id="@+id/cancel_edit"
+            anndroid:layout_width="wrap_content"
+            anndroid:layout_height="match_parent"
+            anndroid:text="取消"
+            anndroid:textSize="16sp"
+            anndroid:textColor="@color/white"
+            anndroid:layout_alignParentRight="true"
+            anndroid:background="@color/red"
+            anndroid:gravity="center"
+            anndroid:paddingRight="20dp"
+            anndroid:visibility="gone"
+            />
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -41,46 +54,26 @@
 
     </android.support.v7.widget.RecyclerView>
 
-    <RelativeLayout
+    <LinearLayout
+        anndroid:id="@+id/card_bottom"
         anndroid:layout_width="match_parent"
-        anndroid:layout_height="50dp"
-        anndroid:background="#646464"
-        anndroid:gravity="center">
-        <CheckBox
-            anndroid:id="@+id/all_check"
-            anndroid:layout_width="wrap_content"
+        anndroid:layout_height="50dp">
+        <RelativeLayout
+            anndroid:layout_width="match_parent"
             anndroid:layout_height="match_parent"
-            anndroid:layout_alignParentStart="true"
-            anndroid:text=" 全选"
-            style="@style/MyCheckBox"
-            anndroid:layout_marginLeft="15dp"
-            anndroid:textColor="@color/white"/>
+            anndroid:background="#646464"
+            anndroid:gravity="center">
 
-        <TextView
-            anndroid:id="@+id/total_money"
-            anndroid:layout_width="wrap_content"
-            anndroid:layout_height="match_parent"
-            anndroid:text="合计:"
-            anndroid:textSize="20sp"
-            anndroid:gravity="center"
-            anndroid:layout_marginLeft="15dp"
-            anndroid:layout_toRightOf="@id/all_check"
-            anndroid:textColor="@color/white"/>
-        <TextView
-            anndroid:layout_width="wrap_content"
-            anndroid:layout_height="match_parent"
-            anndroid:text="¥4.50(每份)"
-            anndroid:textSize="20sp"
-            anndroid:layout_toRightOf="@id/total_money"
-            anndroid:gravity="center"
-            anndroid:textColor="@color/white"/>
+            <TextView
+                anndroid:id="@+id/total_money"
+                anndroid:layout_width="wrap_content"
+                anndroid:layout_height="match_parent"
+                anndroid:text="喜糖盒子还空空如也"
+                anndroid:textSize="20sp"
+                anndroid:gravity="center"
+                anndroid:layout_marginLeft="15dp"
+                anndroid:textColor="@color/white"/>
+        </RelativeLayout>
+    </LinearLayout>
 
-        <Button
-            anndroid:layout_width="wrap_content"
-            anndroid:layout_height="match_parent"
-            anndroid:background="@color/red"
-            anndroid:layout_alignParentRight="true"
-            anndroid:text="去结算"
-            anndroid:textColor="@color/white"/>
-    </RelativeLayout>
 </LinearLayout>

@@ -5,14 +5,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.john.myapplication.activity.R;
+import com.example.john.myapplication.interfaces.MyCheckBoxListener;
 import com.example.john.myapplication.interfaces.MyItemClickListener;
 import com.example.john.myapplication.model.CardItem;
-import com.example.john.myapplication.model.Fruit;
 
 import java.util.List;
 
@@ -24,16 +25,19 @@ public class CarFruitAdapter extends RecyclerView.Adapter<CarFruitAdapter.ViewHo
 
     private List<CardItem> fruitList;
     private MyItemClickListener myItemClickListener;
+    private MyCheckBoxListener myCheckBoxListener;
 
-    static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, CompoundButton.OnCheckedChangeListener{
         public ImageView imageView;
         public TextView textView;
         public ImageView reduce_button;
         public ImageView add_button;
         public TextView amount;
+        public CheckBox checkBox;
         private MyItemClickListener myItemClickListener;
+        private MyCheckBoxListener myCheckBoxListener;
 
-        public ViewHolder(View itemView, MyItemClickListener listener) {
+        public ViewHolder(View itemView, MyItemClickListener listener, MyCheckBoxListener listener2) {
             super(itemView);
             imageView = (ImageView)itemView.findViewById(R.id.fruit_image);
             textView = (TextView)itemView.findViewById(R.id.fruit_name);
@@ -41,8 +45,11 @@ public class CarFruitAdapter extends RecyclerView.Adapter<CarFruitAdapter.ViewHo
             add_button = (ImageView) itemView.findViewById(R.id.add_amount);
             amount = (TextView) itemView.findViewById(R.id.sugar_amount);
             this.myItemClickListener = listener;
+            this.myCheckBoxListener = listener2;
             reduce_button.setOnClickListener(this);
             add_button.setOnClickListener(this);
+            checkBox = (CheckBox) itemView.findViewById(R.id.fruit_checkbox);
+            checkBox.setOnCheckedChangeListener(this);
         }
 
         @Override
@@ -55,11 +62,22 @@ public class CarFruitAdapter extends RecyclerView.Adapter<CarFruitAdapter.ViewHo
                     case R.id.add_amount:
                         Log.d("add", "1");
                         break;
+                    case R.id.fruit_checkbox:
+                       // myItemClickListener.myCheckBoxClick(getPosition());
                     default:
                         Log.d("default", "1");
                         break;
                 }
                 myItemClickListener.myOnItemClick(getPosition());
+            }
+        }
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if(isChecked){
+                myCheckBoxListener.myCheckBoxClick(getPosition());
+            }else{
+                myCheckBoxListener.myCheckBoxClick2(getPosition());
             }
         }
     }
@@ -71,7 +89,7 @@ public class CarFruitAdapter extends RecyclerView.Adapter<CarFruitAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.car_fruit_item, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view, myItemClickListener);
+        ViewHolder viewHolder = new ViewHolder(view, myItemClickListener, myCheckBoxListener);
         return viewHolder;
     }
 
@@ -81,6 +99,7 @@ public class CarFruitAdapter extends RecyclerView.Adapter<CarFruitAdapter.ViewHo
         holder.imageView.setImageResource(cardItem.getFruit().getImageId());
         holder.textView.setText(cardItem.getFruit().getName());
         holder.amount.setText(String.valueOf(cardItem.getAmount()));
+        holder.checkBox.setTag(new Integer(position));
     }
 
     @Override
@@ -88,7 +107,11 @@ public class CarFruitAdapter extends RecyclerView.Adapter<CarFruitAdapter.ViewHo
         return fruitList.size();
     }
 
-    public void setOnItemClickListener(MyItemClickListener onItemClickListener){
+    public void setOnItemClickListener(MyItemClickListener onItemClickListener) {
         this.myItemClickListener = onItemClickListener;
     }
+    public void setMyCheckBoxListener(MyCheckBoxListener myCheckBoxListener){
+        this.myCheckBoxListener = myCheckBoxListener;
+    }
+
 }
