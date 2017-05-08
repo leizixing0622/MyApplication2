@@ -15,6 +15,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.john.myapplication.activity.R;
 import com.example.john.myapplication.adapter.CarFruitAdapter;
@@ -34,7 +35,6 @@ import java.util.List;
 public class SecondFragment extends Fragment implements MyItemClickListener, MyCheckBoxListener, View.OnClickListener {
 
     private SQLiteOpenHelper sqLiteOpenHelper;
-    private SQLiteDatabase sqLiteDatabase;
     private RecyclerView recyclerView;
     private View view;
     private List<CardItem> fruitList = new ArrayList<CardItem>();
@@ -48,6 +48,7 @@ public class SecondFragment extends Fragment implements MyItemClickListener, MyC
     private List<CardItem> checked_fruitList = new ArrayList<CardItem>();
     private TextView goto_pay_button;
     private TextView delete_button;
+    private CarFruitAdapter carFruitAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,7 +59,6 @@ public class SecondFragment extends Fragment implements MyItemClickListener, MyC
         card_bottom = (LinearLayout) view.findViewById(R.id.card_bottom);
         layoutInflater = LayoutInflater.from(this.getActivity());
         sqLiteOpenHelper = new MyDatabaseHelper(this.getActivity(), "SugarStore.db", null, 1);
-        sqLiteDatabase = sqLiteOpenHelper.getWritableDatabase();
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         init();
         getAllSugar();
@@ -66,13 +66,14 @@ public class SecondFragment extends Fragment implements MyItemClickListener, MyC
     }
 
     private void getAllSugar(){
+        SQLiteDatabase sqLiteDatabase = sqLiteOpenHelper.getWritableDatabase();
         Cursor cursor = sqLiteDatabase.query("fruits", null, null, null, null, null, null);
         if(cursor.getCount() == 0){
             edit_button.setVisibility(View.GONE);
         }else{
             fruitList.clear();
             while(cursor.moveToNext()){
-                int id = cursor.getInt(cursor.getColumnIndex("id"));
+                int id = cursor.getInt(cursor.getColumnIndex("fruit_id"));
                 String name = cursor.getString(cursor.getColumnIndex("name"));
                 Float price = cursor.getFloat(cursor.getColumnIndex("price"));
                 String title = cursor.getString(cursor.getColumnIndex("title"));
@@ -83,7 +84,7 @@ public class SecondFragment extends Fragment implements MyItemClickListener, MyC
                 fruitList.add(cardItem);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
                 recyclerView.setLayoutManager(linearLayoutManager);
-                CarFruitAdapter carFruitAdapter = new CarFruitAdapter(fruitList);
+                carFruitAdapter = new CarFruitAdapter(fruitList);
                 recyclerView.setAdapter(carFruitAdapter);
                 carFruitAdapter.setOnItemClickListener(this);
                 carFruitAdapter.setMyCheckBoxListener(this);
@@ -114,11 +115,11 @@ public class SecondFragment extends Fragment implements MyItemClickListener, MyC
             case R.id.edit:
                 card_bottom.removeAllViews();
                 View view = layoutInflater.inflate(R.layout.card_bottom_info2, null);
-                delete_button = (TextView) view.findViewById(R.id.delete);
                 card_bottom.addView(view);
+                delete_button = (TextView) view.findViewById(R.id.delete);
+                delete_button.setOnClickListener(this);
                 edit_button.setVisibility(View.GONE);
                 cancel_edit.setVisibility(View.VISIBLE);
-                delete_button.setOnClickListener(this);
                 break;
             case R.id.cancel_edit:
                 card_bottom.removeAllViews();
@@ -128,20 +129,21 @@ public class SecondFragment extends Fragment implements MyItemClickListener, MyC
                 cancel_edit.setVisibility(View.GONE);
                 break;
             case R.id.go_to_pay:
-                for(int i=0;i<checked_fruitList.size();i++)
-                {
-                    Log.d(">>>>>>", checked_fruitList.get(i).toString());
-                }
+                Toast.makeText(this.getActivity(), "去结算", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.delete:
-                for(int i=0;i<checked_fruitList.size();i++)
+                Toast.makeText(this.getActivity(), "删除成功", Toast.LENGTH_SHORT).show();
+                SQLiteDatabase sqLiteDatabase = sqLiteOpenHelper.getWritableDatabase();
+                for(int i = 0;i<checked_fruitList.size();i++)
                 {
                     int fruit_id = checked_fruitList.get(i).getFruit().getFruitId();
                     sqLiteDatabase.execSQL("delete from fruits where fruit_id = ?", new String[]{String.valueOf(fruit_id)});
                 }
+                checked_fruitList.clear();
                 Cursor cursor = sqLiteDatabase.query("fruits", null, null, null, null, null, null);
                 if(cursor.getCount() == 0){
-                    edit_button.setVisibility(View.GONE);
+                    delete_button.setVisibility(View.GONE);
+                    fruitList.clear();
                 }else{
                     fruitList.clear();
                     while(cursor.moveToNext()){
@@ -154,15 +156,10 @@ public class SecondFragment extends Fragment implements MyItemClickListener, MyC
                         Fruit fruit = new Fruit(id, name, imgId, title, price);
                         CardItem cardItem = new CardItem(amount, fruit);
                         fruitList.add(cardItem);
-                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-                        recyclerView.setLayoutManager(linearLayoutManager);
-                        CarFruitAdapter carFruitAdapter = new CarFruitAdapter(fruitList);
-                        recyclerView.setAdapter(carFruitAdapter);
-                        carFruitAdapter.setOnItemClickListener(this);
-                        carFruitAdapter.setMyCheckBoxListener(this);
                     }
                 }
                 cursor.close();
+                carFruitAdapter.notifyDataSetChanged();
                 break;
             default:
                 break;
@@ -171,13 +168,13 @@ public class SecondFragment extends Fragment implements MyItemClickListener, MyC
 
     @Override
     public void myCheckBoxClick(int position) {
-        //Toast.makeText(this.getActivity(), ">>>>>选中了" + position, Toast.LENGTH_SHORT).show();
         checked_fruitList.add(fruitList.get(position));
+        Log.d(">>>", "选中的有" + checked_fruitList.get(0).getFruit().getFruitId());
     }
 
     @Override
     public void myCheckBoxClick2(int position) {
-        //Toast.makeText(this.getActivity(), ">>>>>取消了" + position, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.getActivity(), ">>>>>取消了" + position, Toast.LENGTH_SHORT).show();
         int fruit_id = fruitList.get(position).getFruit().getFruitId();
         for(int i = 0; i < checked_fruitList.size(); i++){
             if(checked_fruitList.get(i).getFruit().getFruitId() == fruit_id){
