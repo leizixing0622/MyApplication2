@@ -27,7 +27,7 @@
     <TextView
         anndroid:layout_width="wrap_content"
         anndroid:layout_height="match_parent"
-        anndroid:text="¥4.50(每份)"
+        anndroid:text=""
         anndroid:textSize="20sp"
         anndroid:layout_toRightOf="@id/total_money"
         anndroid:gravity="center"

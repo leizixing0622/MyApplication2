@@ -148,6 +148,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                     contentValues.put("title", fruit.getTitle());
                     contentValues.put("amount", 1);
                     contentValues.put("img_id", fruit.getImageId());
+                    contentValues.put("checked", fruit.getChecked());
                     sqLiteDatabase.insert("fruits", null, contentValues);
                     contentValues.clear();
                     Toast.makeText(DetailActivity.this, "已经成功添加到您的喜糖盒子", Toast.LENGTH_SHORT).show();

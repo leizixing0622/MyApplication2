@@ -40,15 +40,15 @@ public class FirstFragment extends Fragment implements MyItemClickListener{
     }
 
     private void initFruits(){
-        Fruit fruit1 = new Fruit(0, "好邻居枣生贵子散装500g结婚独立包装喜枣好邻居蜜枣喜枣蜜饯", R.mipmap.candy1, "枣生贵子", 14.79f);
+        Fruit fruit1 = new Fruit(0, "好邻居枣生贵子散装500g结婚独立包装喜枣好邻居蜜枣喜枣蜜饯", R.mipmap.candy1, "枣生贵子", 14.79f, 1);
         fruits.add(fruit1);
-        Fruit fruit2 = new Fruit(1, "好邻居牵手一生牛奶硬糖500g散装结婚庆喜糖果零食品批发儿童糖果", R.mipmap.candy2, "牵手一生", 16.78f);
+        Fruit fruit2 = new Fruit(1, "好邻居牵手一生牛奶硬糖500g散装结婚庆喜糖果零食品批发儿童糖果", R.mipmap.candy2, "牵手一生", 16.78f, 1);
         fruits.add(fruit2);
-        Fruit fruit3 = new Fruit(2, "结婚庆喜糖果好邻居奇脆米牛奶巧克力500g约100个零食品散装批发", R.mipmap.candy3, "奇脆米", 23.80f);
+        Fruit fruit3 = new Fruit(2, "结婚庆喜糖果好邻居奇脆米牛奶巧克力500g约100个零食品散装批发", R.mipmap.candy3, "奇脆米", 23.80f, 1);
         fruits.add(fruit3);
-        Fruit fruit4 = new Fruit(3, "好邻居真情告白500g约100个水果糖硬糖结婚庆喜糖果散装零食批发", R.mipmap.candy4, "真情告白", 13.80f);
+        Fruit fruit4 = new Fruit(3, "好邻居真情告白500g约100个水果糖硬糖结婚庆喜糖果散装零食批发", R.mipmap.candy4, "真情告白", 13.80f, 1);
         fruits.add(fruit4);
-        Fruit fruit5 = new Fruit(4, "好邻居扁桃仁牛奶糖杏仁糖酥糖500g 喜糖果散装六一休闲零食批发", R.mipmap.candy5, "桃仁奶酥", 25.80f);
+        Fruit fruit5 = new Fruit(4, "好邻居扁桃仁牛奶糖杏仁糖酥糖500g 喜糖果散装六一休闲零食批发", R.mipmap.candy5, "桃仁奶酥", 25.80f, 1);
         fruits.add(fruit5);
     }
 
@@ -61,6 +61,16 @@ public class FirstFragment extends Fragment implements MyItemClickListener{
         bundle.putSerializable("fruit", fruits.get(position));
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    @Override
+    public void addAmount(int position) {
+
+    }
+
+    @Override
+    public void reduceAmount(int position) {
+
     }
 
 }

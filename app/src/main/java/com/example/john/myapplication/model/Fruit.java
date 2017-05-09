@@ -13,13 +13,15 @@ public class Fruit implements Serializable{
     private int imageId;
     private String title;
     private float price;
+    private int checked;
 
-    public Fruit(int fruitId, String name, int imageId, String title, float price) {
+    public Fruit(int fruitId, String name, int imageId, String title, float price, int checked) {
         this.fruitId = fruitId;
         this.name = name;
         this.imageId = imageId;
         this.title = title;
         this.price = price;
+        this.checked = checked;
     }
 
     public String getName() {
@@ -40,5 +42,21 @@ public class Fruit implements Serializable{
 
     public int getFruitId() {
         return fruitId;
+    }
+
+    public int getChecked() {
+        return checked;
+    }
+
+    @Override
+    public String toString() {
+        return "Fruit{" +
+                "fruitId=" + fruitId +
+                ", name='" + name + '\'' +
+                ", imageId=" + imageId +
+                ", title='" + title + '\'' +
+                ", price=" + price +
+                ", checked=" + checked +
+                '}';
     }
 }

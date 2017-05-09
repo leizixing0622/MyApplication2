@@ -20,7 +20,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             "price real, " +
             "amount integer, " +
             "title text," +
-            "img_id integer)";
+            "img_id integer," +
+            "checked integer)";
 
     public MyDatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:anndroid="http://schemas.android.com/apk/res/android"
+    anndroid:layout_width="match_parent"
+    anndroid:layout_height="50dp"
+    anndroid:background="#646464"
+    anndroid:gravity="center">
+    <TextView
+        anndroid:id="@+id/total_money"
+        anndroid:layout_width="match_parent"
+        anndroid:layout_height="match_parent"
+        anndroid:text="快去挑选商品吧"
+        anndroid:textSize="20sp"
+        anndroid:gravity="center"
+        anndroid:layout_marginLeft="15dp"
+        anndroid:textColor="@color/white"/>
+</RelativeLayout>

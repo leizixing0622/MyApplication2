@@ -8,5 +8,7 @@ import com.example.john.myapplication.model.Fruit;
 
 public interface MyItemClickListener {
     public void myOnItemClick(int position);
+    public void addAmount(int position);
+    public void reduceAmount(int position);
 }
 

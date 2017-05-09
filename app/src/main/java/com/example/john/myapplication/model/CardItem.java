@@ -21,4 +21,12 @@ public class CardItem {
     public int getAmount() {
         return amount;
     }
+
+    @Override
+    public String toString() {
+        return "CardItem{" +
+                "fruit=" + fruit.toString() +
+                ", amount=" + amount +
+                '}';
+    }
 }

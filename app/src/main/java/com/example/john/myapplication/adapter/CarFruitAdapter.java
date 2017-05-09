@@ -57,18 +57,15 @@ public class CarFruitAdapter extends RecyclerView.Adapter<CarFruitAdapter.ViewHo
             if(myItemClickListener != null){
                 switch (v.getId()){
                     case R.id.reduce_amount:
-                        Log.d("reduce", "1");
+                        myItemClickListener.reduceAmount(getPosition());
                         break;
                     case R.id.add_amount:
-                        Log.d("add", "1");
+                        myItemClickListener.addAmount(getPosition());
                         break;
-                    case R.id.fruit_checkbox:
-                       // myItemClickListener.myCheckBoxClick(getPosition());
                     default:
                         Log.d("default", "1");
                         break;
                 }
-                myItemClickListener.myOnItemClick(getPosition());
             }
         }
 
@@ -99,7 +96,11 @@ public class CarFruitAdapter extends RecyclerView.Adapter<CarFruitAdapter.ViewHo
         holder.imageView.setImageResource(cardItem.getFruit().getImageId());
         holder.textView.setText(cardItem.getFruit().getName());
         holder.amount.setText(String.valueOf(cardItem.getAmount()));
-        holder.checkBox.setTag(new Integer(position));
+        if(cardItem.getFruit().getChecked() == 0){
+            holder.checkBox.setChecked(false);
+        }else{
+            holder.checkBox.setChecked(true);
+        }
     }
 
     @Override

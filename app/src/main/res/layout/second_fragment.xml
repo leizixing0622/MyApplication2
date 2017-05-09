@@ -68,7 +68,7 @@
                 anndroid:id="@+id/total_money"
                 anndroid:layout_width="wrap_content"
                 anndroid:layout_height="match_parent"
-                anndroid:text="喜糖盒子还空空如也"
+                anndroid:text="快去挑选商品吧"
                 anndroid:textSize="20sp"
                 anndroid:gravity="center"
                 anndroid:layout_marginLeft="15dp"
