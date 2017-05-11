@@ -1,15 +1,27 @@
 package com.example.john.myapplication.fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.john.myapplication.activity.DetailActivity;
+import com.example.john.myapplication.activity.MainActivity;
 import com.example.john.myapplication.activity.R;
 import com.example.john.myapplication.adapter.FruitAdapter;
 import com.example.john.myapplication.interfaces.MyItemClickListener;
@@ -24,43 +36,16 @@ import java.util.List;
 
 public class FirstFragment extends Fragment implements MyItemClickListener{
 
-    private List<Fruit> fruits = new ArrayList<>();
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.first_fragment, container, false);
-        initFruits();
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        FruitAdapter fruitAdapter = new FruitAdapter(fruits);
-        recyclerView.setAdapter(fruitAdapter);
-        fruitAdapter.setOnItemClickListener(this);
-        return view;
-    }
-
-    private void initFruits(){
-        Fruit fruit1 = new Fruit(0, "好邻居枣生贵子散装500g结婚独立包装喜枣好邻居蜜枣喜枣蜜饯", R.mipmap.candy1, "枣生贵子", 14.79f, 1);
-        fruits.add(fruit1);
-        Fruit fruit2 = new Fruit(1, "好邻居牵手一生牛奶硬糖500g散装结婚庆喜糖果零食品批发儿童糖果", R.mipmap.candy2, "牵手一生", 16.78f, 1);
-        fruits.add(fruit2);
-        Fruit fruit3 = new Fruit(2, "结婚庆喜糖果好邻居奇脆米牛奶巧克力500g约100个零食品散装批发", R.mipmap.candy3, "奇脆米", 23.80f, 1);
-        fruits.add(fruit3);
-        Fruit fruit4 = new Fruit(3, "好邻居真情告白500g约100个水果糖硬糖结婚庆喜糖果散装零食批发", R.mipmap.candy4, "真情告白", 13.80f, 1);
-        fruits.add(fruit4);
-        Fruit fruit5 = new Fruit(4, "好邻居扁桃仁牛奶糖杏仁糖酥糖500g 喜糖果散装六一休闲零食批发", R.mipmap.candy5, "桃仁奶酥", 25.80f, 1);
-        fruits.add(fruit5);
-    }
-
+    private PagerAdapter pagerAdapter;
+    private ViewPager viewPager;
+    private int[] images = new int[]{R.mipmap.icon11, R.mipmap.icon21, R.mipmap.icon31, R.mipmap.icon12, R.mipmap.icon22, R.mipmap.icon32};
+    private List<String> list_Title;
+    private TabLayout tabLayout;
+    private Context context = getActivity();
 
     @Override
     public void myOnItemClick(int position) {
-        Intent intent = new Intent(this.getActivity(), DetailActivity.class);
-        intent.putExtra("title", fruits.get(position).getTitle());
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("fruit", fruits.get(position));
-        intent.putExtras(bundle);
-        startActivity(intent);
+
     }
 
     @Override
@@ -73,4 +58,55 @@ public class FirstFragment extends Fragment implements MyItemClickListener{
 
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.first_fragment, container, false);
+        initData();
+        viewPager = (ViewPager) view.findViewById(R.id.viewpager);
+        viewPager.setAdapter(pagerAdapter);
+        tabLayout = (TabLayout) view.findViewById(R.id.tablayout);
+        tabLayout.setupWithViewPager(viewPager);
+        return view;
+    }
+
+    private void initData(){
+        final List<Fragment> fragments = new ArrayList<Fragment>();
+        Fragment fragment1 = new FirstFragmentTab1();
+        Fragment fragment2 = new SecondFragment();
+        fragments.add(fragment1);
+        fragments.add(fragment2);
+        list_Title = new ArrayList<>();
+        list_Title.add("选喜糖");
+        list_Title.add("选喜糖盒子");
+        pagerAdapter = new FragmentStatePagerAdapter(getChildFragmentManager()){
+
+            @Override
+            public Fragment getItem(int position) {
+                return fragments.get(position);
+            }
+
+            @Override
+            public int getCount() {
+                return fragments.size();
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return list_Title.get(position % list_Title.size());
+            }
+
+            /**
+             * 在调用notifyDataSetChanged()方法后，随之会触发该方法，根据该方法返回的值来确定是否更新
+             * object对象为Fragment，具体是当前显示的Fragment和它的前一个以及后一个
+             */
+            @Override
+            public int getItemPosition(Object object) {
+                if(object.getClass().getName().equals(SecondFragment.class.getName())){
+                    return POSITION_NONE;
+                }
+                return super.getItemPosition(object);
+            }
+        };
+    }
 }

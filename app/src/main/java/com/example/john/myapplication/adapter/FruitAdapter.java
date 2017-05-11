@@ -46,7 +46,9 @@ public class FruitAdapter extends RecyclerView.Adapter<FruitAdapter.ViewHolder> 
     }
 
     public FruitAdapter(List<Fruit> fruits) {
+
         fruitList = fruits;
+
     }
 
     @Override
@@ -72,4 +74,6 @@ public class FruitAdapter extends RecyclerView.Adapter<FruitAdapter.ViewHolder> 
     public void setOnItemClickListener(MyItemClickListener onItemClickListener){
         this.myItemClickListener = onItemClickListener;
     }
+
+
 }
