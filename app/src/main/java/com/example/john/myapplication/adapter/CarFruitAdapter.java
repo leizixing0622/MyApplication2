@@ -34,6 +34,7 @@ public class CarFruitAdapter extends RecyclerView.Adapter<CarFruitAdapter.ViewHo
         public ImageView add_button;
         public TextView amount;
         public CheckBox checkBox;
+        private TextView price;
         private MyItemClickListener myItemClickListener;
         private MyCheckBoxListener myCheckBoxListener;
 
@@ -44,6 +45,7 @@ public class CarFruitAdapter extends RecyclerView.Adapter<CarFruitAdapter.ViewHo
             reduce_button = (ImageView) itemView.findViewById(R.id.reduce_amount);
             add_button = (ImageView) itemView.findViewById(R.id.add_amount);
             amount = (TextView) itemView.findViewById(R.id.sugar_amount);
+            price = (TextView) itemView.findViewById(R.id.price);
             this.myItemClickListener = listener;
             this.myCheckBoxListener = listener2;
             reduce_button.setOnClickListener(this);
@@ -96,6 +98,7 @@ public class CarFruitAdapter extends RecyclerView.Adapter<CarFruitAdapter.ViewHo
         holder.imageView.setImageResource(cardItem.getFruit().getImageId());
         holder.textView.setText(cardItem.getFruit().getName());
         holder.amount.setText(String.valueOf(cardItem.getAmount()));
+        holder.price.setText(String.valueOf(cardItem.getFruit().getPrice()));
         if(cardItem.getFruit().getChecked() == 0){
             holder.checkBox.setChecked(false);
         }else{
